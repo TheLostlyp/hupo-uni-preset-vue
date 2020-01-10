@@ -1,0 +1,15 @@
+{
+	"pages": [ 
+		{
+			"path": "packages/tabbar/pages/index/index"
+		}
+	],
+	"globalStyle": {
+    "navigationBarBackgroundColor": "#FAFAFA",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#FAFAFA",
+    "onReachBottomDistance": 200,
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": false
+	}
+}
