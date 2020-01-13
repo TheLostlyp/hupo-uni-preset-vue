@@ -1,5 +1,7 @@
 const path = require('path')
+<% if (options.features.indexOf('compileUploadOssCdn') !== -1) { %>
 const UploadCdn = require('@hupo/compile-upload-oss-cdn').default
+<% } %>
 const resolve = dir => path.join(__dirname, dir)
 const qa = true
 module.exports = {
@@ -11,6 +13,8 @@ module.exports = {
     }
   },
   chainWebpack: config => {
+    <% if (options.features.indexOf('compileUploadOssCdn') !== -1) { %>
+    // ---------- 图片大小显示 上传cdn
     if (process.env.NODE_ENV === 'production') {
       // 为生产环境修改配置...
       config.plugin('UploadCdn').use(new UploadCdn({
@@ -25,13 +29,11 @@ module.exports = {
         options.limit = 100
         return options
       })
+    <% } %>
+    // ---------- 别名配置
     config.resolve.alias
       .set('@', resolve('src'))
-      .set('@api', resolve('src/common/api'))
       .set('@core', resolve('src/core'))
-      .set('@mixin', resolve('src/core/mixins'))
-      .set('@common', resolve('src/common'))
-      .set('@components', resolve('src/components'))
-      .set('@images', resolve('src/assets/images'))
+    // ---------- 别名配置
   }
 }

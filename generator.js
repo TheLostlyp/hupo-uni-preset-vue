@@ -1,5 +1,4 @@
 module.exports = (api, options, rootOptions) => {
-  const template = options.repo || options.template
   // 清空默认生成的模板
   api.render(async function (files) {
     Object.keys(files).forEach(name => {
@@ -16,11 +15,8 @@ module.exports = (api, options, rootOptions) => {
         '@dcloudio/uni-helper-json': '*',
         'regenerator-runtime': '^0.12.1',
         "@hupo/core": "2.0.0-uni-app.4",
-        "@hupo/core-request-uni": "^2.0.0-uni-app.1",
-        "@hupo/core-sass-bem": "^2.0.0-uni-app.2",
       },
       devDependencies: {
-        "@hupo/compile-upload-oss-cdn": "^0.1.37",
         "@types/html5plus": "*",
         "@types/uni-app": "*",
         "@vue/cli-plugin-babel": "3.5.1",
@@ -33,30 +29,80 @@ module.exports = (api, options, rootOptions) => {
         "eslint-plugin-vue": "^5.2.3",
         "mini-types": "*",
         "miniprogram-api-typings": "^2.8.0-2",
-        "node-sass": "^4.13.0",
-        "postcss-comment": "^2.0.0",
-        "sass-loader": "^8.0.0",
+       
       }
     }
   })
 
-  if (template === 'mall') {
+  // hupo ui
+  if (options.features.indexOf('hupoUI') !== -1) {
     api.extendPackage(pkg => {
       return {
         dependencies: {
           "@hupo/ui": "2.0.0-uni-app.7",
-          "lodash.debounce": "^4.0.8",
-          "lodash.throttle": "^4.1.1",
         }
       }
     })
   }
+
+  // scss 
+  if (options.features.indexOf('scss') !== -1) {
+    api.extendPackage(pkg => {
+      return {
+        dependencies: {
+          "@hupo/core-sass-bem": "^2.0.0-uni-app.2",
+        },
+        devDependencies: {
+          "node-sass": "^4.13.0",
+          "postcss-comment": "^2.0.0",
+          "sass-loader": "^8.0.0",
+        }
+      }
+    })
+  }
+
+  // 图片上传cdn
+  if (options.features.indexOf('compileUploadOssCdn') !== -1) {
+    api.extendPackage(pkg => {
+      return {
+        devDependencies: {
+          "@hupo/compile-upload-oss-cdn": "^0.1.37",
+        }
+      }
+    })
+  }
+
+  // 网络请求
+  if (options.features.indexOf('coreRequestUni') !== -1) {
+    api.extendPackage(pkg => {
+      return {
+        dependencies: {
+        "@hupo/core-request-uni": "^2.0.0-uni-app.1",
+        }
+      }
+    })
+  }
+
   // 渲染通用文件
   api.render('./template/common')
-  if (template === 'base') {
-    api.render('./template/base')
+
+  // eslint
+  if (options.features.indexOf('eslint') !== -1) {
+    api.render('./template/eslint')
   }
-  if (template === 'mall') {
-    api.render('./template/mall')
+
+  // vuex
+  if (options.features.indexOf('vuex') !== -1) {
+    api.render('./template/vuex')
+  }
+
+  // jsconfig
+  if (options.jsconfig) {
+    api.render('./template/eslint')
+  }
+
+  // hupo工具
+  if (options.hupoTool) {
+    api.render('./template/huoconfig')
   }
 }

@@ -1,0 +1,11 @@
+{
+  "pages": [
+    {
+      "path": "packages/tabbar/pages/index/index",
+      "style": {
+        "navigationBarTitleText": "首页"
+      }
+    }
+  ],
+  "globalStyle": {}
+}

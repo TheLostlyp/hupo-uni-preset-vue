@@ -1,2 +1,5 @@
+// 添加@hupo/core-sass-bem包 添加代码
+<% if (options.features.indexOf('hupoUI') !== -1) { %>
 @import "~@hupo/core-sass-bem";
-$namespace: "base";
+<% } %>
+$namespace: "mall";
