@@ -7,5 +7,41 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "commitizen": "^4.0.3",
+    "cz-customizable": "^6.2.0",
+    "husky": "^4.0.10",
+    "standard-version": "^7.0.1"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
+  "standard-version": {
+    "skip": {
+      "tag": true,
+      "commit": true,
+      "bump": true
+    },
+    "types": [
+        {"type":"feat","section":"Features"},
+        {"type":"fix","section":"Bug Fixes"},
+        {"type":"chore","hidden":true},
+        {"type":"docs","hidden":true},
+        {"type":"style","hidden":true},
+        {"type":"refactor","section":"Refactor"},
+        {"type":"perf","section":"Perf"},
+        {"type":"test","hidden":true},
+        {"type":"revert","section":"Revert"}
+      ]
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
 }
