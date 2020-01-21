@@ -19,6 +19,12 @@ module.exports = [
     default: false
   },
   {
+    name: "gitCommit",
+    type: "confirm",
+    message: '添加git commit 规范',
+    default: false
+  },
+  {
     name: "hupoTool",
     type: "confirm",
     message: '添加hupo工具',

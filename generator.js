@@ -83,6 +83,53 @@ module.exports = (api, options, rootOptions) => {
     })
   }
 
+  // git commit规范
+  if (options.gitCommit) {
+    api.extendPackage(pkg => {
+      return {
+        scripts: {
+          "changelog": "rm CHANGELOG.md && standard-version"
+        },
+        devDependencies: {
+          "@commitlint/cli": "^8.3.4",
+          "@commitlint/config-conventional": "^8.3.4",
+          "commitizen": "^4.0.3",
+          "cz-customizable": "^6.2.0",
+          "husky": "^4.0.9",
+          "standard-version": "^7.0.1"
+        },
+        config: {
+          commitizen: {
+            "path": "node_modules/cz-customizable"
+          }
+        },
+        "standard-version": {
+          "skip": {
+            "tag": true,
+            "commit": true,
+            "bump": true
+          },
+          types: [
+              {"type":"feat","section":"Features"},
+              {"type":"fix","section":"Bug Fixes"},
+              {"type":"chore","hidden":true},
+              {"type":"docs","hidden":true},
+              {"type":"style","hidden":true},
+              {"type":"refactor","section":"Refactor"},
+              {"type":"perf","section":"Perf"},
+              {"type":"test","hidden":true},
+              {"type":"revert","section":"Revert"}
+            ]
+        },
+        husky: {
+          hooks: {
+            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+          }
+        }
+      }
+    })
+  }
+
   // 渲染通用文件
   api.render('./template/common')
 
@@ -99,6 +146,11 @@ module.exports = (api, options, rootOptions) => {
   // jsconfig
   if (options.jsconfig) {
     api.render('./template/eslint')
+  }
+
+  // git commit
+  if (options.gitCommit) {
+    api.render('./template/gitcommit')
   }
 
   // hupo工具
